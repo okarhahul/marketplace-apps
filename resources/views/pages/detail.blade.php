@@ -67,23 +67,35 @@
             </div>
         </section>
 
-        <div class="store-details-content" data-aos="fade-up">
         <!-- Details Porduct -->
+        <div class="store-details-content mt-2" data-aos="fade-up">
         <section class="store-heading">
             <div class="container">
             <div class="row">
                 <div class="col-lg-8">
                 <h1>{{ $product->name }}</h1>
                 <div class="owner mb-1">By {{ $product->user->store_name }}</div>
-                <div class="price">$ {{ $product->price }}</div>
+                <div class="price">$ {{ number_format($product->price) }}</div>
                 </div>
                 <div class="col-lg-2" data-aos="fade-up">
-                <a
-                    href="cart.html"
-                    class="btn btn-success px-4 text-white btn-block mb-3"
-                >
-                    Add to Cart!
-                </a>
+                    @auth
+                    <form action="{{ route('detail-add', $product->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                        <button
+                        type="submit"
+                        class="btn btn-success px-4 text-white btn-block mb-3"
+                        >
+                            Add to Cart!
+                        </button>
+                    </form>
+                    @else
+                        <a
+                            href="{{ route('login') }}"
+                            class="btn btn-success px-4 text-white btn-block mb-3"
+                        >
+                            Add to Cart!
+                        </a>    
+                    @endauth
                 </div>
             </div>
             </div>
@@ -95,26 +107,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. At,
-                    minus laudantium. Architecto eius voluptatibus quia quisquam
-                    hic veniam expedita unde qui, officiis, aperiam sequi
-                    perferendis ex explicabo eaque, libero dolores molestias modi
-                    placeat quibusdam officia? Perspiciatis at totam quibusdam
-                    porro nesciunt, rerum voluptatibus, sint necessitatibus eum,
-                    praesentium accusamus animi tenetur optio earum! Adipisci,
-                    maxime quasi. Similique fuga natus consectetur minus
-                    voluptates nemo quaerat. Aperiam voluptate assumenda nulla
-                    similique in nobis eligendi, accusantium, eveniet nam maiores
-                    ut molestias delectus natus voluptatum vel quidem, nostrum
-                    laboriosam architecto sit? Deleniti itaque odio quae dolores
-                    magnam, earum eaque incidunt voluptatum, quisquam facilis quas
-                    numquam?
-                </p>
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Veritatis alias ullam blanditiis aspernatur at est, iure
-                    dolorem! Itaque repudiandae ipsum impedit quis nostrum
-                    corporis non!
+                    {!! $product->description !!}
                 </p>
                 </div>
             </div>
@@ -188,22 +181,12 @@
         data: {
           activePhoto: 0,
           photos: [
-            {
-              id: 1,
-              url: "/images/product-details-1.jpg",
-            },
-            {
-              id: 2,
-              url: "/images/product-details-2.jpg",
-            },
-            {
-              id: 3,
-              url: "/images/product-details-3.jpg",
-            },
-            {
-              id: 4,
-              url: "/images/product-details-4.jpg",
-            },
+            @foreach($product->galleries as  $gallery)
+                {
+                id: {{ $gallery->id }},
+                url: "{{ Storage::url($gallery->photos) }}",
+                },           
+            @endforeach
           ],
         },
         methods: {

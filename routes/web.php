@@ -42,10 +42,12 @@ Route::get('/category', [CategoryController::class, 'index'])->name('category');
 Route::get('/category/{id}', [CategoryController::class, 'detail'])->name('category-detail');
 
 Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
+Route::post('/detail/{id}', [DetailController::class, 'add'])->name('detail-add');
 
 
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
 Route::get('/success', [CartController::class, 'success'])->name('success');
 
 

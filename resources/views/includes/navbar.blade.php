@@ -3,7 +3,7 @@
     data-aos="fade-down"
 >
     <div class="container">
-    <a href="/index.html" class="navbar-brand">
+    <a href="{{ route('home') }}" class="navbar-brand">
         <img src="/images/logo.svg" alt="logo" />
     </a>
     <button
@@ -41,8 +41,16 @@
         @auth
         <ul class="navbar-nav d-none d-lg-flex">
             <li class="nav-item">
-              <a href="#" class="nav-link d-inline-block mt-2">
-                <img src="images/icon-cart-empty.svg" alt="" />
+              <a href="{{ route('cart') }}" class="nav-link d-inline-block mt-2">
+                @php 
+                    $carts = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
+                @endphp
+                @if ($carts > 0)
+                    <img src="/images/icon-cart-filled.svg" alt="" />
+                    <div class="card-badge">{{ $carts }}</div>
+                @else
+                    <img src="/images/icon-cart-empty.svg" alt="" />
+                @endif
               </a>
             </li>
             <li class="nav-item dropdown">
