@@ -11,9 +11,6 @@
 
 Fake project ini merupakan Website berbasis Market Place, yang mana user bisa registrasi akun kemudian melakukan login pada Website. selain itu, user juga bisa melihat barang yang tersedia serta membelinya. serta user juga dapat menjual berbagai product yang ingin ia jual. 
 
-Note: Fake project ini saya buat berdasarkan modul pembelajaran dari BuildWithAngga
-
-
 ## Library yang digunakan
 
 Pada Fake Project ini saya menggunakan Laravel, Bootstrap serta Vue dan juga Database Mysql
